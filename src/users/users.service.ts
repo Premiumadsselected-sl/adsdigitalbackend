@@ -62,13 +62,13 @@ export class UsersService extends MessagesService {
         let user = null
         
         try {
-            
+
             if( !req.id || req.id === '' )
                 user = await this.prisma.users.findUnique({
-                    where: { email: req.email }
+                    where: { email: req.email, deletedAt: null }
                 })
             else user = await this.prisma.users.findUnique({
-                    where: { id: req.id.toString() }
+                    where: { id: req.id.toString(), deletedAt: null }
                 })
             
             if ( !user ) 
@@ -118,11 +118,16 @@ export class UsersService extends MessagesService {
         try {
 
             if( !req.id || req.id === '' )
-                user = await this.prisma.users.delete({
-                    where: { email: req.email }
+                user =
+                await this.prisma.users.update({
+                    where: { email: req.email },
+                    data: { deletedAt: new Date() }
                 })
-            else user = await this.prisma.users.delete({
-                    where: { id: req.id.toString() }
+
+            else user =
+                await this.prisma.users.update({
+                    where: { id: req.id.toString() },
+                    data: { deletedAt: new Date() }
                 })
 
             if( !user )
