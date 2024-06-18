@@ -1,4 +1,4 @@
-import { Injectable, HttpCode } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { AuthDto } from 'src/dto/auth.dto'
 
 @Injectable()
