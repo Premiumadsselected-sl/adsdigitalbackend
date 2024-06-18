@@ -31,12 +31,14 @@ async function bootstrap() {
     }
   }))
 
-  app.enableCors({
-    origin: process.env.API_CORS_ORIGIN,
-    methods: 'GET, POST, PUT, PATCH, DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-    credentials: true
-  })
+  // app.enableCors({
+  //   origin: process.env.API_CORS_ORIGIN,
+  //   methods: 'GET, POST, PUT, PATCH, DELETE',
+  //   allowedHeaders: 'Content-Type, Authorization',
+  //   credentials: true
+  // })
+
+  app.enableCors()
 
 
   await app.listen(process.env.PORT || 3001)
