@@ -1,0 +1,32 @@
+-- CreateTable
+CREATE TABLE "Payments" (
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "id" TEXT NOT NULL,
+    "user_id" VARCHAR(100) NOT NULL,
+    "user_name" VARCHAR(100) NOT NULL,
+    "email" VARCHAR(100) NOT NULL,
+    "payment_status" VARCHAR(50) DEFAULT 'pending',
+    "payment_code" VARCHAR(100),
+    "payment_date" TIMESTAMP(3),
+    "payment_amount" DOUBLE PRECISION,
+    "payment_currency" VARCHAR(10) DEFAULT 'USD',
+    "payment_method" VARCHAR(50) DEFAULT 'paypal',
+    "payment_details" JSONB DEFAULT '{}',
+    "payment_response" JSONB DEFAULT '{}',
+    "payment_error" JSONB DEFAULT '{}',
+    "payment_refund" JSONB DEFAULT '{}',
+    "payment_refund_date" TIMESTAMP(3),
+    "payment_refund_reason" VARCHAR(100),
+    "payment_refund_status" VARCHAR(50) DEFAULT 'pending',
+    "payment_refund_code" VARCHAR(100),
+    "payment_refund_amount" DOUBLE PRECISION,
+    "payment_refund_currency" VARCHAR(10) DEFAULT 'USD',
+    "payment_refund_method" VARCHAR(50) DEFAULT 'paypal',
+    "payment_refund_details" JSONB DEFAULT '{}',
+    "payment_refund_response" JSONB DEFAULT '{}',
+    "payment_refund_error" JSONB DEFAULT '{}',
+    "payment_logs" JSONB DEFAULT '{}',
+
+    CONSTRAINT "Payments_pkey" PRIMARY KEY ("id")
+);

@@ -1,0 +1,9 @@
+{
+    "ResetPassword": {
+        "title": "Restablecer Contraseña",
+        "subtitle": "Haz clic en el link de abajo para restablecer tu contraseña.",
+        "password_reset_text": "Restablecer Contraseña",
+        "policy_text": "Política de Privacidad",
+        "terms_text": "Términos de Servicio"
+    }
+}

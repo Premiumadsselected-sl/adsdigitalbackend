@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Users {
+  
+  id String @id @default(cuid()) 
+  role String? @default("subscriber") @db.VarChar(50)
+  email String @unique @db.VarChar(100)
+  password String @db.VarChar(100)
+  token String? @unique @db.VarChar(255)
+  status String? @default("active") @db.VarChar(50)
+  locale String? @default("en") @db.VarChar(10)
+  downloads Int? @default(0)
+  user_name String? @db.VarChar(100)
+  user_data Json? @default("{}")
+  user_password_token String? @db.VarChar(100)
+  user_service_emails_styles String? @db.VarChar(255)
+  user_service_domain_url String? @db.VarChar(255)
+  user_service_support_email String? @db.VarChar(100)
+  user_service_name String? @db.VarChar(100)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscriptions[]
+  emails Emails[]
+  payments Payments[]
+
+}
+
+model Subscriptions {
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  id String @id @default(cuid())
+  user_id String @unique @db.VarChar(100)
+  user_name String @db.VarChar(100)
+  email String @unique @db.VarChar(100)
+  trial_status String? @default("active") @db.VarChar(50)
+  trial_start DateTime?
+  trial_end DateTime? 
+  subscription_start DateTime?
+  subscription_status String? @default("pending") @db.VarChar(50)
+  subscription_code String? @db.VarChar(100)
+  subscription_end DateTime?
+  down_date DateTime? 
+  down_reason String? @db.VarChar(100)
+
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+}
+
+model Emails {
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  id String @id @default(cuid())
+  user_id String @unique @db.VarChar(100)
+  user_name String @db.VarChar(100)
+  email String @unique @db.VarChar(100)
+  email_status String? @default("pending") @db.VarChar(50)
+  email_code String? @db.VarChar(100)
+  email_date DateTime?
+  email_subject String? @db.VarChar(255)
+  email_body String? @db.VarChar(255)
+  email_response Json? @default("{}")
+  email_error Json? @default("{}")
+
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+}
+
+model Payments {
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  id String @id @default(cuid())
+  user_id String @unique @db.VarChar(100)
+  user_name String @db.VarChar(100)
+  email String @unique @db.VarChar(100)
+  payment_status String? @default("pending") @db.VarChar(50)
+  payment_code String? @db.VarChar(100)
+  payment_date DateTime?
+  payment_amount Float? @default(49.99)
+  payment_trial_amount Float? @default(0.60)
+  payment_currency String? @default("EUR") @db.VarChar(10)
+  payment_method String? @default("card") @db.VarChar(50)
+  payment_details String? @db.VarChar(255)
+  payment_response Json? @default("{}")
+  payment_error Json? @default("{}")
+  payment_refund Json? @default("{}")
+  payment_refund_date DateTime?
+  payment_refund_reason String? @db.VarChar(100)
+  payment_refund_status String? @default("pending") @db.VarChar(50)
+  payment_refund_code String? @db.VarChar(100)
+  payment_refund_amount Float? @default(49.99)
+  payment_refund_currency String? @default("EUR") @db.VarChar(10)
+  payment_refund_method String? @default("card") @db.VarChar(50)
+  payment_refund_details Json? @default("{}")
+  payment_refund_response Json? @default("{}")
+  payment_refund_error Json? @default("{}")
+  payment_logs Json? @default("{}")
+
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+}
