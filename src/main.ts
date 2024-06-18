@@ -4,12 +4,11 @@ import { ValidationPipe } from '@nestjs/common'
 import { AuthGuard } from './guards/auth/auth.guard'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { JwtService } from '@nestjs/jwt'
-import { join } from 'path'
-import {NestExpressApplication} from '@nestjs/platform-express'
 
 async function bootstrap() {
   
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create(AppModule)
+
   const config = new DocumentBuilder()
   .setTitle(process.env.API_TITLE)
   .setDescription(process.env.API_DESCRIPTION)
@@ -39,7 +38,6 @@ async function bootstrap() {
     credentials: true
   })
 
-  app.useStaticAssets(join(__dirname, '..', 'node_modules/swagger-ui-dist'))
 
   await app.listen(process.env.PORT || 3001)
 
