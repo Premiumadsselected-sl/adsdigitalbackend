@@ -5,9 +5,9 @@ IsNumber, IsObject} from 'class-validator'
 export class TefpayDto {
 
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @ApiProperty()
-    id?: number
+    id?: string
     
     @IsOptional()
     @IsNotEmpty()

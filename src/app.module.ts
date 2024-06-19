@@ -26,20 +26,20 @@ import { JwtModule } from '@nestjs/jwt'
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '1d' }
     })
   ],
   providers: [
     AuthService, 
+    PrismaService, 
     UsersService, 
     SubscriptionsService, 
-    PrismaService, 
     TefpayService,
+    MessagesService,
+    JwtService,
     GetUserDto, 
     GetSubscriptionDto, 
-    CreateSubscriptionDto,
-    MessagesService,
-    JwtService
+    CreateSubscriptionDto
   ]
 })
 export class AppModule {}

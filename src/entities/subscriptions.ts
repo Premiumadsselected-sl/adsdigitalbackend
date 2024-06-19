@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString, IsEmail, IsOptional, Length, IsDate 
 } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
 
 export class SubscriptionEntitie {
     
@@ -16,6 +17,7 @@ export class SubscriptionEntitie {
     @ApiProperty()
     protected user_id?: string
     
+    @Transform( ({value}) => value.trim() )
     @IsOptional()
     @IsNotEmpty()
     @IsString()
@@ -23,6 +25,7 @@ export class SubscriptionEntitie {
     @ApiProperty()
     protected user_name?: string
 
+    @Transform( ({value}) => value.trim() )
     @IsOptional()
     @IsNotEmpty()
     @IsString()

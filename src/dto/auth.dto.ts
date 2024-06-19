@@ -1,7 +1,7 @@
-import { AuthProperties } from "src/entities/auth"
+import { AuthEntitie } from "src/entities/auth"
 
-export class AuthDto extends AuthProperties {
-    credentials: AuthProperties['credentials']
+export class AuthDto extends AuthEntitie {
+    credentials: AuthEntitie['credentials']
 }
 
 

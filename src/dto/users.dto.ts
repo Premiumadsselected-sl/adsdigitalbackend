@@ -1,10 +1,34 @@
 import { UserEntitie } from '../entities/users'
 
-export class CreateUserDto extends UserEntitie {
+export class LoginDto extends UserEntitie {
+    email?: UserEntitie['email']
+    password: UserEntitie['password']
+    remember_me?: UserEntitie['remember_me']
+
+}
+
+export class LogoutDto extends UserEntitie {
+    email?: UserEntitie['email']
+    
+}
+
+export class RegisterDto extends UserEntitie {
     user_name: UserEntitie['user_name']
     email?: UserEntitie['email']
     password: UserEntitie['password']
+    remember_me?: UserEntitie['remember_me']
 
+}
+
+export class GetUserDto extends UserEntitie {
+    id?: UserEntitie['id']
+    email?: UserEntitie['email']
+
+}
+
+export class GetUserProfileDto extends UserEntitie {
+    id?: UserEntitie['id']
+    email?: UserEntitie['email']
 }
 
 export class UpdateUserDto extends UserEntitie {
@@ -14,30 +38,15 @@ export class UpdateUserDto extends UserEntitie {
     
 }
 
-export class GetUserDto extends UserEntitie {
+export class UpdateUserProfileDto extends UserEntitie {
     id?: UserEntitie['id']
     email?: UserEntitie['email']
-
+    user_name: UserEntitie['user_name']
 }
 
 export class DeleteUserDto extends UserEntitie {
     id?: UserEntitie['id']
     email?: UserEntitie['email']
-
-}
-
-export class LoginUserDto extends UserEntitie {
-    email?: UserEntitie['email']
-    password: UserEntitie['password']
-    remember_me?: UserEntitie['remember_me']
-
-}
-
-export class RegisterUserDto extends UserEntitie {
-    user_name: UserEntitie['user_name']
-    email?: UserEntitie['email']
-    password: UserEntitie['password']
-    remember_me?: UserEntitie['remember_me']
 
 }
 
@@ -56,27 +65,6 @@ export class ChangePasswordDto extends UserEntitie {
     email?: UserEntitie['email']
     password: UserEntitie['password']
 
-}
-
-export class LogoutDto extends UserEntitie {
-    email?: UserEntitie['email']
-    
-}
-
-export class GetUserProfileDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-}
-
-export class UpdateUserProfileDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    user_name: UserEntitie['user_name']
-}
-
-export class GetUserDownloadsDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
 }
 
 export class SetUserDataDto extends UserEntitie {
@@ -98,4 +86,3 @@ export class UpdateUserDataDto extends UserEntitie {
     user_data: UserEntitie['user_data']
 
 }
-
