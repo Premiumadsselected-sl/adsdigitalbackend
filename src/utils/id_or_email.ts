@@ -1,12 +1,18 @@
-
 export type OneKeyObject = { 
     [ K: string ] : any 
 }
 
 export const IdOrEmail = 
 ( id:string, email:string, extra?:OneKeyObject  ) => { 
-    const keys = Object.keys( extra )
-    // ..Silent is gold..
-    return keys.length !== 1 ? {id: null, email: null, ...extra}
+    
+    let keys = null
+    if( !extra ) 
+        return id ? { id: id } : { email: email }
+
+    keys = Object.keys( extra as object )
+
+    return keys.length !== 1 ? 
+    { id: null, email: null, ...extra }
     : id ? { id: id, ...extra } : { email: email, ...extra }
+
 }

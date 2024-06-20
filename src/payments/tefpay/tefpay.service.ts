@@ -23,7 +23,7 @@ export class TefpayService {
       })
 
       if( !user ) 
-        return {...user, ...this.messages.notFoundUser()}
+        throw this.messages.notFoundUser()
       
       const user_subscription = await this.subscriptionService.getSubscription({
         user_id: user.id,
@@ -31,7 +31,7 @@ export class TefpayService {
       })
 
       if( user_subscription ) 
-        return {...user, ...this.messages.subscriptionFoundError()}
+        throw this.messages.subscriptionFoundError()
 
       const create_payment = await this.prisma.payments.create({ data: {
         user_id: user.id,
@@ -41,7 +41,7 @@ export class TefpayService {
       }})
 
       if( !create_payment ) 
-        return {...create_payment, ...this.messages.PaymentFlowError()}
+        throw this.messages.PaymentFlowError()
 
       const create_suscription = await this.subscriptionService.createSubscription({
         user_id: user.id,
@@ -51,9 +51,9 @@ export class TefpayService {
       })
 
       if( !create_suscription ) 
-        return {...create_suscription, ...this.messages.subscriptionNotCreated()}
+        throw this.messages.subscriptionNotCreated()
         
-      const { password, ...account } = user
+      const { ...account } = user
       const { ...payment } = create_payment
       const { ...subscription } = create_suscription
       
@@ -71,7 +71,7 @@ export class TefpayService {
       const tefpay = await this.prisma.payments.findMany()
 
       if( !tefpay ) 
-        return { ...tefpay, ...this.messages.notFound()}
+        return this.messages.notFound()
 
       return tefpay
 
@@ -85,7 +85,7 @@ export class TefpayService {
     })
 
     if( !tefpay )  
-      return { ...tefpay, ...this.messages.notFound()}
+      throw this.messages.notFound()
 
     return tefpay
 
@@ -121,7 +121,7 @@ export class TefpayService {
     } })
 
     if( !tefpay ) 
-      return { ...tefpay, ...this.messages.badRequest(tefpay)}
+      return { ...tefpay, ...this.messages.badRequest()}
 
     return tefpay  
 
@@ -134,7 +134,7 @@ export class TefpayService {
     } })
   
     if( !tefpay ) 
-      return { ...tefpay, ...this.messages.badRequest(tefpay)}
+      return this.messages.badRequest()
 
     return tefpay
 

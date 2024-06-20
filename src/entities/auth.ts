@@ -6,7 +6,7 @@ export class AuthEntitie {
         
     @IsNotEmpty()
     @IsObject()
-    @ApiProperty()
+    @ApiProperty({ required: true })
     protected credentials: object
 
 }

@@ -7,14 +7,14 @@ export class SubscriptionEntitie {
     
     @IsOptional()
     @IsString()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected id?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @Length(3, 100)
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected user_id?: string
     
     @Transform( ({value}) => value.trim() )
@@ -22,54 +22,53 @@ export class SubscriptionEntitie {
     @IsNotEmpty()
     @IsString()
     @Length(3, 100)
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected user_name?: string
 
     @Transform( ({value}) => value.trim() )
-    @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsEmail()
-    @ApiProperty()
+    @ApiProperty({ required: true })
     protected email?: string
     
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected subscription_status?: string
     
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected subscription_code?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsDate()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected trial_start?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsDate()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected trial_end?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsDate()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected down_date?: string
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    @ApiProperty()
+    @ApiProperty({ required: false })
     protected down_reason?: string
     
 }

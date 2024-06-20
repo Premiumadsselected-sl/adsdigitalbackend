@@ -1,4 +1,4 @@
-import { SubscriptionGuard } from '../guards/auth/subscription.guard'
+import { SubscriptionGuard } from '../auth/guards/subscription.guard'
 
 describe('SubscriptionGuard', () => {
   it('should be defined', () => {

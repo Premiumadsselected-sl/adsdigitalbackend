@@ -6,9 +6,12 @@ UpdateSubscription, DownSubscription
 } from 'src/dto/subscriptions.dto'
 
 @Injectable()
-export class SubscriptionsService extends MessagesService{
+export class SubscriptionsService {
     
-    constructor( private prisma:PrismaService ) { super() }
+    constructor( 
+        private readonly prisma:PrismaService,
+        private readonly messages:MessagesService
+     ) { }
 
     async createSubscription(req: CreateSubscriptionDto) {
         
@@ -24,7 +27,7 @@ export class SubscriptionsService extends MessagesService{
         )
 
         if( !subscription ) 
-            throw this.subscriptionNotCreated()
+            throw this.messages.subscriptionNotCreated()
 
         return subscription
 
@@ -37,7 +40,7 @@ export class SubscriptionsService extends MessagesService{
         })
 
         if( !subscription ) 
-            throw this.subscriptionNotFound()
+            throw this.messages.subscriptionNotFound()
 
         return subscription
     
@@ -50,12 +53,18 @@ export class SubscriptionsService extends MessagesService{
         })
 
         if( !subscription ) 
-            throw this.subscriptionNotFound()
+            throw this.messages.subscriptionNotFound()
 
         if( subscription.subscription_status !== 'active' ) 
-            throw this.subscriptionNotActive()
+            throw {
+                status: subscription.subscription_status,
+                ...this.messages.subscriptionNotActive()
+            }
 
-        return this.subscriptionFound(subscription.subscription_status)
+        return {
+            status: subscription.subscription_status,
+            ...this.messages.subscriptionFound(subscription.subscription_status)
+        }
 
     }
 
@@ -70,9 +79,9 @@ export class SubscriptionsService extends MessagesService{
         })
 
         if( !subscription ) 
-            throw this.badRequest(subscription)
+            throw this.messages.updateSubscriptionError()
 
-        return this.subscriptionUpdated()
+        return this.messages.subscriptionUpdated()
 
     }
 
@@ -89,9 +98,9 @@ export class SubscriptionsService extends MessagesService{
         })
 
         if( !subscription ) 
-            throw this.badRequest(subscription)
+            throw this.messages.downSubscriptionError()
 
-        return this.subscriptionDowned()
+        return this.messages.subscriptionDowned()
 
     }
 

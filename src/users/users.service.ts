@@ -11,18 +11,30 @@ export class UsersService {
     constructor( 
         private readonly prisma:PrismaService,
         private readonly messages:MessagesService
-    ) { }
+    ) {}
 
     async getUser(req:GetUserDto) {
 
+        console.log('Hola hola')
         const user = await this.prisma.users.findUnique({
             where: IdOrEmail( req.id, req.email, { deletedAt : null } ) 
         })
         
         if ( !user ) 
-            throw this.messages.notFound() 
+            throw this.messages.notFoundUser()
 
-        return user 
+        const { 
+            password,
+            token, 
+            user_password_token, 
+            user_service_emails_styles,
+            user_service_domain_url,
+            user_service_support_email,
+            user_service_name,
+            ...clean_response
+        } = user
+
+        return clean_response
 
     }
 
@@ -32,7 +44,7 @@ export class UsersService {
             where: IdOrEmail( req.id, req.email )
         })
 
-        if( !user ) throw this.messages.notFound() 
+        if( !user ) throw this.messages.notFoundUserData()
 
         return user.user_data 
         
@@ -49,7 +61,7 @@ export class UsersService {
         })
 
         if( !user ) 
-            throw this.messages.notFound()
+            throw this.messages.notFoundUser()
 
         return {
             ...user,

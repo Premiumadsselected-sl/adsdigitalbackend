@@ -1,9 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
-import { AuthGuard } from './guards/auth/auth.guard'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { JwtService } from '@nestjs/jwt'
 
 async function bootstrap() {
   
@@ -14,13 +12,17 @@ async function bootstrap() {
   .setDescription(process.env.API_DESCRIPTION)
   .setVersion(process.env.API_VERSION)
   .addTag(process.env.API_TAGS)
+  .addBearerAuth()
   .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api/swagger', app, document)
+  SwaggerModule.setup('api/docs', app, document)
 
-  app.useGlobalGuards(new AuthGuard(
-    new JwtService({ secret: process.env.API_JWT_SECRET })
-  ))
+  // Note: The following code is commented out because the AuthGuard 
+  // class is not yet implemented globally in the application.
+  // app.useGlobalGuards(new AuthGuard(
+  //   new JwtService({ secret: process.env.API_JWT_SECRET })
+  // ))
+
   app.setGlobalPrefix('api')
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,

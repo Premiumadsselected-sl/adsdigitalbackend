@@ -38,7 +38,7 @@ export class EmailsService extends MessagesService{
     }
 
     catch (error) {
-      return this.messages.internalServerError(error)
+      return this.messages.internalServerError()
     }
 
   }
@@ -57,7 +57,7 @@ export class EmailsService extends MessagesService{
     }
 
     catch (error) {
-      return this.messages.internalServerError(error)
+      return this.messages.internalServerError()
     }
 
   }
@@ -80,7 +80,7 @@ export class EmailsService extends MessagesService{
     }
 
     catch (error) {
-      return this.messages.internalServerError(error)
+      return this.messages.internalServerError()
     }
 
   }
@@ -103,7 +103,7 @@ export class EmailsService extends MessagesService{
       }
   
       catch (error) {
-        return this.messages.internalServerError(error)
+        return this.messages.internalServerError()
       }
 
   }

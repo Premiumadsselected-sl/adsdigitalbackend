@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
 import { TefpayController } from './tefpay.controller'
-import { SubscriptionsService } from 'src/subscriptions/subscriptions.service'
 import { TefpayService } from './tefpay.service'
+import { UsersModule } from 'src/users/users.module'
 import { UsersService } from 'src/users/users.service'
+import { SubscriptionsService } from 'src/subscriptions/subscriptions.service'
 import { PrismaService } from 'src/prisma.service'
 import { MessagesService } from 'src/utils/messages'
-import { UsersModule } from 'src/users/users.module'
 
 @Module({
   imports: [UsersModule],
