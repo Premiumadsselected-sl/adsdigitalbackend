@@ -1,14 +1,29 @@
-version: '3.1'
-
 services:
-  db:
-    image: postgres
-    restart: always
+  
+  api:
+    container_name: "adsdigital_api"
+    build: .
+    ports: 
+    - "8080:8080"
     environment:
-      POSTGRES_PASSWORD: pROgY547Ge221
-      POSTGRES_DB: iq-testonline
-      POSTGRES_USER: Premiumadsselected
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    ports:
-      - 5433:5432
+      DATABASE_URL: "postgresql://data_base:5432/adsdigital_database"
+      DATABASE_USERNAME: "adsdigital"
+      DATABASE_PASSWORD: "pROgY547Ge221"
+    depends_on:
+      - data_base
+
+  data_base: 
+    container_name: "data_base"
+    image: postgres
+    ports: 
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: "adsdigital"
+      POSTGRES_PASSWORD: "pROgY547Ge221"
+      POSTGRES_DB: "adsdigital_database"
+
+volumes:
+ postgres-data:
+
+
+
