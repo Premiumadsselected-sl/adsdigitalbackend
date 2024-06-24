@@ -6,7 +6,7 @@ import { MessagesService } from 'src/utils/messages'
 import { AuthGuard } from 'src/auth/guards/auth.guard'
 
 @Controller('payments')
-@ApiTags('Payments')
+@ApiTags('💳 Payments')
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class TefpayController {
