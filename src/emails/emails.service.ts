@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { EmailDto } from './dto/email.dto'
+import { CreateEmailTdo, FindAllEmailsTdo, FindOneEmailTdo,
+RemoveEmailTdo } from './dto/email.dto'
 import { PrismaService } from 'src/prisma.service'
 import { MessagesService } from 'src/utils/messages'
 
@@ -11,7 +12,7 @@ export class EmailsService extends MessagesService{
     private messages: MessagesService
   ) { super() }
   
-  async create(req: EmailDto) {
+  async create(req: CreateEmailTdo) {
     
     try {
       
@@ -43,11 +44,14 @@ export class EmailsService extends MessagesService{
 
   }
 
-  findAll() {
+  findAll(req: FindAllEmailsTdo) {
     
     try {
       
-      const emails = this.prisma.emails.findMany()
+      const emails = this.prisma.emails.findMany({
+        skip: req.init,
+        take: req.limit
+      })
 
       if(emails['statusCode'] !== 200) 
         throw emails
@@ -62,13 +66,13 @@ export class EmailsService extends MessagesService{
 
   }
 
-  findOne(req: EmailDto) {
+  findOne(req: FindOneEmailTdo) {
     
     try {
       
       const email = this.prisma.emails.findUnique({
         where: {
-          id: req.user_id
+          email: req.email
         }
       })
 
@@ -85,13 +89,13 @@ export class EmailsService extends MessagesService{
 
   }
 
-  remove(req: EmailDto) {
+  remove(req: RemoveEmailTdo) {
       
       try {
         
         const email = this.prisma.emails.delete({
           where: {
-            id: req.user_id
+            id: req.email
           }
         })
   

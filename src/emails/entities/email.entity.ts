@@ -1,5 +1,4 @@
-import { IsString, IsNotEmpty, IsEmail, Length, IsOptional,
-IsNumber, IsBoolean,
+import { IsString, IsNotEmpty,
 IsObject} from 'class-validator'
 
 export class EmailEntitie {

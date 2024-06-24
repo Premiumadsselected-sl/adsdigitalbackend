@@ -1,57 +1,74 @@
-import { EmailEntitie } from "../entities/email.entity"
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from "class-validator"
+//import { EmailEntitie } from "../entities/email.entity"
 
-export class EmailDto {
+export class CreateEmailTdo{
 
+    @IsString()
+    @IsNotEmpty()
     user_id: string
+
+    @IsString()
+    @IsNotEmpty()
     user_name: string
+
+    @IsString()
+    @IsNotEmpty()
     email: string
+
+    @IsString()
+    @IsNotEmpty()
     email_status: string
+
+    @IsString()
+    @IsNotEmpty()
     email_code: string
+
+    @IsString()
+    @IsNotEmpty()
     email_date: string
+
+    @IsString()
+    @IsNotEmpty()
     email_subject: string
+
+    @IsString()
+    @IsNotEmpty()
     email_body: string
-    email_response: object
+
+    @IsString()
+    @IsNotEmpty()
+    email_response: string
+
+    @IsString()
+    @IsNotEmpty()
     email_error: string
-    email_logs: object
 
-    constructor(email: EmailEntitie) {
-        this.user_id = email.user_id
-        this.user_name = email.user_name
-        this.email = email.email
-        this.email_status = email.email_status
-        this.email_code = email.email_code
-        this.email_date = email.email_date
-        this.email_subject = email.email_subject
-        this.email_body = email.email_body
-        this.email_response = email.email_response
-        this.email_error = email.email_error
-    }
-
-    public static toDto(email: EmailEntitie): EmailDto {
-        return new EmailDto(email)
-    }
-
-    public static toDtos(emails: EmailEntitie[]): EmailDto[] {
-        return emails.map(email => EmailDto.toDto(email))
-    }
-
-    public static toEntity(emailDto: EmailDto): EmailEntitie {
-        return {
-            user_id: emailDto.user_id,
-            user_name: emailDto.user_name,
-            email: emailDto.email,
-            email_status: emailDto.email_status,
-            email_code: emailDto.email_code,
-            email_date: emailDto.email_date,
-            email_subject: emailDto.email_subject,
-            email_body: emailDto.email_body,
-            email_response: emailDto.email_response,
-            email_error: emailDto.email_error
-        }
-    }
-
-    public static toEntities(emailDtos: EmailDto[]): EmailEntitie[] {
-        return emailDtos.map(emailDto => EmailDto.toEntity(emailDto))
-    }
-    
 }
+
+export class FindAllEmailsTdo{
+    @IsNumber()
+    @IsNotEmpty()
+    @Length(1, 100)
+    init: number
+
+    @IsNumber()
+    @IsNotEmpty()
+    @Length(1, 100)
+    limit: number
+}
+
+export class FindOneEmailTdo{
+    @IsString()
+    @IsNotEmpty()
+    email: string
+}
+
+export class RemoveEmailTdo{
+    @IsString()
+    @IsNotEmpty()
+    email: string
+}
+
+
+
+

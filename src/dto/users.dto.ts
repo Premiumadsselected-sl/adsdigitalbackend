@@ -1,88 +1,254 @@
-import { UserEntitie } from '../entities/users'
+import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
+import { IsOptional, IsString, Length, IsNotEmpty, IsEmail, IsBoolean, IsObject } from 'class-validator'
+// import { UserEntitie } from '../entities/users'
 
-export class LoginDto extends UserEntitie {
-    email?: UserEntitie['email']
-    password: UserEntitie['password']
-    remember_me?: UserEntitie['remember_me']
+export class LoginDto {
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
 
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(6, 20)
+    @ApiProperty({ required: false, description: "User's password (optional)." })
+    password?: string
+
+    @IsOptional()
+    @IsBoolean()
+    @ApiProperty({ required: false, description: "Remember me for future logins (optional)." })
+    remember_me?: boolean
 }
 
-export class LogoutDto extends UserEntitie {
-    email?: UserEntitie['email']
+export class LogoutDto {
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+}
+
+export class RegisterDto {
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(3, 100)
+    @ApiProperty({ required: false, description: "User's name (optional)." })
+    user_name?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(6, 20)
+    @ApiProperty({ required: false, description: "User's password (optional)." })
+    password?: string
+
+    @IsOptional()
+    @IsBoolean()
+    @ApiProperty({ required: false, description: "Remember me for future logins (optional)." })
+    remember_me?: boolean
+}
+
+export class GetUserDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+}
+
+export class GetUserProfileDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+}
+
+export class UpdateUserDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(3, 100)
+    @ApiProperty({ required: false, description: "User's name (optional)." })
+    user_name?: string
+}
+
+export class UpdateUserProfileDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(3, 100)
+    @ApiProperty({ required: false, description: "User's name (optional)." })
+    user_name?: string
+}
+
+export class DeleteUserDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
     
-}
-
-export class RegisterDto extends UserEntitie {
-    user_name: UserEntitie['user_name']
-    email?: UserEntitie['email']
-    password: UserEntitie['password']
-    remember_me?: UserEntitie['remember_me']
-
-}
-
-export class GetUserDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
+    @Transform( ({value}) => value.trim() )
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true })
+    email: string
 
 }
 
-export class GetUserProfileDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
+export class ForgotPasswordDto {
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User's preferred language (optional)." })
+    locale?: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User's password reset token (optional)." })
+    user_password_token?: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "Email styling information (optional)." })
+    user_service_emails_styles?: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User service domain URL (optional)." })
+    user_service_domain_url?: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User service support email address (optional)." })
+    user_service_support_email?: string
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User service name (optional)." })
+    user_service_name?: string
 }
 
-export class UpdateUserDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    user_name: UserEntitie['user_name']
-    
+export class ChangePasswordDto {
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @Transform(({ value }) => value.trim())
+    @IsOptional()
+    @IsString()
+    @Length(6, 20)
+    @ApiProperty({ required: false, description: "User's new password (optional)." })
+    password?: string
 }
 
-export class UpdateUserProfileDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    user_name: UserEntitie['user_name']
+export class SetUserDataDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
+
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
+
+    @IsOptional()
+    @IsObject()
+    @ApiProperty({ required: false, description: "Additional user data (optional)." })
+    user_data: object
 }
 
-export class DeleteUserDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
+export class GetUserDataDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
 
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
 }
 
-export class ForgotPasswordDto extends UserEntitie {
-    locale: UserEntitie['locale']
-    email?: UserEntitie['email']
-    user_password_token: UserEntitie['user_password_token']
-    user_service_emails_styles?: UserEntitie['user_service_emails_styles']
-    user_service_domain_url: UserEntitie['user_service_domain_url']
-    user_service_support_email: UserEntitie['user_service_support_email']
-    user_service_name: UserEntitie['user_service_name']
+export class UpdateUserDataDto {
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ required: false, description: "User ID (optional)." })
+    id?: string
 
-}
+    @Transform(({ value }) => value.trim())
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    @ApiProperty({ required: true, description: "User's email address." })
+    email: string
 
-export class ChangePasswordDto extends UserEntitie {
-    email?: UserEntitie['email']
-    password: UserEntitie['password']
-
-}
-
-export class SetUserDataDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    user_data: UserEntitie['user_data']
-    
-}
-
-export class GetUserDataDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    
-}
-
-export class UpdateUserDataDto extends UserEntitie {
-    id?: UserEntitie['id']
-    email?: UserEntitie['email']
-    user_data: UserEntitie['user_data']
-
+    @IsOptional()
+    @IsObject()
+    @ApiProperty({ required: false, description: "Updated user data (optional)." })
+    user_data?: object 
 }

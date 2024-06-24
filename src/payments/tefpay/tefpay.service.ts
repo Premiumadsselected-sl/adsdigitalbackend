@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 import { UsersService } from 'src/users/users.service'
 import { SubscriptionsService } from 'src/subscriptions/subscriptions.service'
-import { TefpayDto } from './dto/tefpay.dto'
+import { PaymentFlowDto, FindAllPaymentsDto, FindOneDto, UpdateDto, RemoveDto } from './dto/tefpay.dto'
 import { MessagesService } from 'src/utils/messages'
+import { IdOrEmail } from 'src/utils/id_or_email'
+import { GetUserDto } from 'src/dto/users.dto'
 
 @Injectable()
 export class TefpayService {
@@ -15,20 +17,17 @@ export class TefpayService {
     private readonly messages: MessagesService
   ) {}
 
-  async paymentFlow( req: TefpayDto ) {
+  async paymentFlow( req: PaymentFlowDto ) {
 
-      const user = await this.UsersService.getUser({
-        id: req.user_id,
-        email: req.email
-      })
+      
+      const user = await this.UsersService.getUser(
+        IdOrEmail( req.user_id, req.email ) as GetUserDto)
 
       if( !user ) 
         throw this.messages.notFoundUser()
       
-      const user_subscription = await this.subscriptionService.getSubscription({
-        user_id: user.id,
-        email: user.email
-      })
+      const user_subscription = await this.subscriptionService.getSubscription(
+        IdOrEmail( user.id, user.email ) as GetUserDto)
 
       if( user_subscription ) 
         throw this.messages.subscriptionFoundError()
@@ -66,9 +65,12 @@ export class TefpayService {
 
   }
 
-  async findAll() {
+  async findAll( req: FindAllPaymentsDto) {
     
-      const tefpay = await this.prisma.payments.findMany()
+      const tefpay = await this.prisma.payments.findMany({
+        skip: req.init,
+        take: req.limit
+      })
 
       if( !tefpay ) 
         return this.messages.notFound()
@@ -77,11 +79,11 @@ export class TefpayService {
 
   }
 
-  async findOne(req: TefpayDto) {
+  async findOne(req: FindOneDto) {
     
     const tefpay = 
     await this.prisma.payments.findUnique({ 
-      where: { id: req.id } 
+      where: { id: req.user_id } 
     })
 
     if( !tefpay )  
@@ -91,13 +93,12 @@ export class TefpayService {
 
   }
 
-  async update(req: TefpayDto) {
+  async update(req: UpdateDto) {
       
-    const tefpay = await this.prisma.payments.update({ where: { id: String(req.id) }, data: {
+    const tefpay = await this.prisma.payments.update({ where: { id: String(req.user_id) }, data: {
       user_id: req.user_id,
       user_name: req.user_name,
       email: req.email,
-      payment_code: req.payment_code,
       payment_status: req.payment_status,
       payment_date: req.payment_date,
       payment_amount: req.payment_amount,
@@ -127,10 +128,10 @@ export class TefpayService {
 
   }
 
-  async remove(req: TefpayDto) {
+  async remove(req: RemoveDto) {
       
     const tefpay = await this.prisma.payments.delete({ 
-      where: { id: String(req.id) 
+      where: { id: String(req.user_id) 
     } })
   
     if( !tefpay ) 

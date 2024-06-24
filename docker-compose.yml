@@ -1,16 +1,19 @@
 services:
   
-  api:
-    container_name: "adsdigital_api"
-    build: .
-    ports: 
-    - "8080:8080"
-    environment:
-      DATABASE_URL: "postgresql://data_base:5432/adsdigital_database"
-      DATABASE_USERNAME: "adsdigital"
-      DATABASE_PASSWORD: "pROgY547Ge221"
-    depends_on:
-      - data_base
+  # api:
+  #   container_name: "adsdigital_api"
+  #   build: .
+  #   ports: 
+  #   - "8080:8080"
+  #   environment:
+  #     DATABASE_URL: "postgresql://data_base:5432/adsdigital_database"
+  #     DATABASE_USERNAME: "adsdigital"
+  #     DATABASE_PASSWORD: "pROgY547Ge221"
+  #     DEFAULT_USER_EMAIL: "admin@admin.com"
+  #     DEFAULT_USER_PASSWORD: "pROgY547Ge221"
+  #     API_JWT_SECRET: "not-use in production"
+  #   depends_on:
+  #     - data_base
 
   data_base: 
     container_name: "data_base"
@@ -18,12 +21,9 @@ services:
     ports: 
     - "5432:5432"
     environment:
-      POSTGRES_USER: "adsdigital"
-      POSTGRES_PASSWORD: "pROgY547Ge221"
-      POSTGRES_DB: "adsdigital_database"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
 
 volumes:
  postgres-data:
-
-
-

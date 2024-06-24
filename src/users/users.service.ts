@@ -39,7 +39,7 @@ export class UsersService {
     }
 
     async getUserData(req: GetUserDataDto) {
-        
+        console.log(req)
         const user = await this.prisma.users.findFirst({
             where: IdOrEmail( req.id, req.email )
         })

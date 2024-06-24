@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import { MessagesService } from 'src/utils/messages'
 import { PrismaService } from 'src/prisma.service'
 import { AuthDto } from 'src/dto/auth.dto'
-import { EmailDto } from 'src/emails/dto/email.dto'
+import { CreateEmailTdo } from 'src/emails/dto/email.dto'
 import * as dto from 'src/dto/users.dto'
 import * as bcrypt from 'bcrypt'
 import * as nodemailer from 'nodemailer'
@@ -153,8 +153,7 @@ export class AuthService {
         return await transporter.sendMail(mailOptions, function (error: any, info: { response: string }) {
             
             if ( error ) {
-
-                // Note: This action make a log of the email sent
+                
                 this.logEmail({
                     user_id: user.id,
                     user_name: user.user_name,
@@ -171,7 +170,6 @@ export class AuthService {
                 throw this.forgotPasswordMessageError(error)
             }
 
-            // Note: This action make a log of the email sent
             this.logEmail({
                 user_id: user.id,
                 user_name: user.user_name,
@@ -248,7 +246,7 @@ export class AuthService {
 
     }
 
-    async logEmail(req: EmailDto) {
+    async logEmail(req: CreateEmailTdo) {
             
         const user = await this.prisma.emails.create({
             data: {
@@ -273,9 +271,9 @@ export class AuthService {
     }
 
     async setUserData(req: dto.SetUserDataDto) {
-        
+        console.log(req)
         const user = await this.prisma.users.update({
-            where: { email: req.email },
+            where: IdOrEmail( req.id, req.email ),
             data: { user_data: req.user_data }
         })
 
