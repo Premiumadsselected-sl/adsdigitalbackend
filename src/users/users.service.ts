@@ -14,8 +14,7 @@ export class UsersService {
     ) {}
 
     async getUser(req:GetUserDto) {
-
-        console.log('Hola hola')
+        
         const user = await this.prisma.users.findUnique({
             where: IdOrEmail( req.id, req.email, { deletedAt : null } ) 
         })
