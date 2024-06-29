@@ -7,8 +7,6 @@ import { AuthGuard } from 'src/auth/guards/auth.guard'
 
 @Controller('payments')
 @ApiTags('💳 Payments')
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
 export class TefpayController {
   
   constructor(
@@ -17,6 +15,8 @@ export class TefpayController {
   ) {}
 
   @Post('payment-flow')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Payment Flow' })
   @ApiBody({ type: PaymentFlowDto })
   @ApiResponse({ status: 400, description: 'Bad request. Please check your information.'})
@@ -29,11 +29,14 @@ export class TefpayController {
     try {
       return this.tefpayService.paymentFlow(req)
     } catch (error) {
-      return this.messages.internalServerError()
+      return { error: error.message }
+      //return this.messages.internalServerError()
     }
   }
 
   @Post('find-all')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Find All Payments' })
   @ApiBody({ type: FindAllPaymentsDto, required: false }) 
   @ApiResponse({ status: 400, description: 'Bad request. Please check your filtering criteria.'}) 
@@ -49,6 +52,8 @@ export class TefpayController {
   }
 
   @Post('find-one')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Find One Payment' })
   @ApiBody({ type: FindOneDto })
   @ApiResponse({ status: 400, description: 'Bad request. Please check your payment ID.'}) 
@@ -65,6 +70,8 @@ export class TefpayController {
   }
 
   @Patch('update')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Payment' })
   @ApiBody({ type: UpdateDto })
   @ApiResponse({ status: 400, description: 'Bad request. Please check your update data.'}) 
@@ -81,6 +88,8 @@ export class TefpayController {
   }
 
   @Delete('delete')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Payment' })
   @ApiBody({ type: RemoveDto })
   @ApiResponse({ status: 400, description: 'Bad request. Please check your payment ID.'}) 
