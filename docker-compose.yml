@@ -1,29 +1,30 @@
+
 services:
   
-  # api:
-  #   container_name: "adsdigital_api"
-  #   build: .
-  #   ports: 
-  #   - "8080:8080"
-  #   environment:
-  #     DATABASE_URL: "postgresql://data_base:5432/adsdigital_database"
-  #     DATABASE_USERNAME: "adsdigital"
-  #     DATABASE_PASSWORD: "pROgY547Ge221"
-  #     DEFAULT_USER_EMAIL: "admin@admin.com"
-  #     DEFAULT_USER_PASSWORD: "pROgY547Ge221"
-  #     API_JWT_SECRET: "not-use in production"
-  #   depends_on:
-  #     - data_base
-
-  data_base: 
-    container_name: "data_base"
-    image: postgres
+  api:
+    container_name: "adsdigital_api"
+    build: .
     ports: 
-    - "5432:5432"
+    - "8080:3000"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      DATABASE_URL: "postgresql://ep-lingering-feather-a4k316v5.us-east-1.aws.neon.tech:5432/verceldb"
+      DATABASE_USERNAME: "default"
+      DATABASE_PASSWORD: "MXkK6RHTjY8L"
+      API_JWT_SECRET: "Premiumadsselected@2024-}23fRt.G"
+    # depends_on:
+    #   - data_base
+
+  # data_base: 
+  #   container_name: "data_base"
+  #   image: postgres
+  #   ports: 
+  #   - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #   volumes:
+  #   - postgres-data:/var/lib/postgresql/data
 
 volumes:
  postgres-data:

@@ -1,23 +1,24 @@
 # Use Node.js image
 FROM node:current-alpine
-# Build NestJS application
-WORKDIR /
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies and build the project
+# Install dependencies
 RUN npm install -g pnpm
 RUN pnpm install
 
-COPY prisma/* ./
+# Copy source files
 COPY . .
 
-# Expose port
-# EXPOSE 8080
+# Build the project
+RUN pnpm run build
 
-# Run application
-CMD ["node", "/dist/main.js"]
+# Expose the port
+EXPOSE 3000
 
-
-
-
-
+# Run the application
+CMD ["node", "dist/main"]

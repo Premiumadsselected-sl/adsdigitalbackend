@@ -14,7 +14,7 @@ export class UsersService {
     ) {}
 
     async getUser(req:GetUserDto) {
-        
+
         const user = await this.prisma.users.findUnique({
             where: IdOrEmail( req.id, req.email, { deletedAt : null } ) 
         })
@@ -62,9 +62,19 @@ export class UsersService {
         if( !user ) 
             throw this.messages.notFoundUser()
 
+        const { 
+            password,
+            token,
+            user_password_token,
+            user_service_emails_styles,
+            user_service_domain_url,
+            user_service_name,
+            ...clean_response
+        } = user
+
         return {
-            ...user,
-            user_data: user.user_data,
+            ...clean_response,
+            user_data: clean_response.user_data,
             subscription: subscription || null
         }
 
